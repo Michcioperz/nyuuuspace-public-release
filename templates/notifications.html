@@ -1,0 +1,15 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+  <body>
+    <h3>Hello from the <strong>nyuuuspace</strong>!</h3>
+    <p>We've been following the hugs and pats and all the things alike, and we'd like to show you what you've missed in the meantime:</p>
+    <ul>
+      {% for hug in hugs %}
+        <li><a href="https://nyuuu.space{{ hug.get_absolute_url }}">{{ hug.timestamp|naturaltime }}</a> {% if hug.source == user %}you{% else %}<a href="https://nyuuu.space{{ hug.source.userware.get_absolute_url }}">{{ hug.source.username }}</a>{% endif %} {{ hug.kind.past }} {% if hug.target == user %}you{% else %}<a href="https://nyuuu.space{{ hug.target.userware.get_absolute_url }}">{{ hug.target.username }}</a>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    <p>And as always, there's still much more to happen!</p>
+    <p>Visit <a href="https://nyuuu.space">https://nyuuu.space</a> soon and catch up to speed! &lt;3</p>
+  </body>
+</html>

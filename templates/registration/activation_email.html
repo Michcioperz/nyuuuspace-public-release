@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Your new account on nyuuuspace</title>
+</head>
+
+<body>
+<p>
+    You (or someone pretending to be you) have asked to register an account at
+    <a href="https://nyuuu.space">nyuuuspace</a>.  If this wasn't you, please ignore this email
+    and your address will be removed from our records.
+</p>
+<p>
+    To activate this account, please click the following link within the next
+    {{ expiration_days }} days:
+</p>
+
+<p>
+    <a href="https://nyuuu.space{% url 'registration_activate' activation_key %}">
+        https://nyuuu.space{% url 'registration_activate' activation_key %}
+    </a>
+</p>
+<p>
+    We hope that you'll have plenty of fun using our service!
+
+    --Your friends at nyuuuspace
+</p>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{% extends "registration/registration_base.html" %}
+
+{% block content %}
+<p>
+    Your account has been successfully activated.
+    {% if not user.is_authenticated %}
+    You can <a href="{% url "auth_login" %}">log in</a> now.
+    {% else %}
+    Go ahead and <a href="/">explore the nyuuuspace</a>!
+    {% endif %}
+</p>
+{% endblock %}

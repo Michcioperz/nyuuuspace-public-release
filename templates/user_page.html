@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load cache %}
+{% load nyuuu %}
+{% block title %}{{ target.username }} | nyuuuspace{% endblock title %}
+{% block head_insert %}
+<link rel="canonical" href="https://nyuuu.space{{ target.userware.get_absolute_url }}">
+{% endblock head_insert %}
+{% block content %}
+<div class="halfbrick left">
+  <div class="card">
+    <h1 itemprop="username"{% if target.userware.colour|bright_detector %} class="overbright"{% endif %} style="color: {{ target.userware.colour|colour_optimizer }}">{{ target.username }}</h1>
+    {% if user.is_authenticated %}
+    {% if target != user %}
+    {% with followed=target|followed_by:user %}
+    {% if followed %}
+      <form method="post" action="{% url "user_unfollow_action" target.username %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="submit" value="Unfollow">
+      </form>
+    {% else %}
+      <form method="post" action="{% url "user_follow_action" target.username %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="submit" value="Follow">
+      </form>
+    {% endif %}
+    {% endwith %}
+    {% endif %}
+    <form method="post" action="{{ target.userware.get_absolute_url }}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      Let's <input type="submit" value="send"> {{ target.userware.pronoun.object }} {{ form.kind }}!
+    </form>
+    {% endif %}
+  </div>
+</div>
+<div class="halfbrick right">
+  {% for hug in target.userware.hugs_come_and_gone %}
+    {% cache 300 hug hug.pk %}
+      {% include "hug_card.html" %}
+    {% endcache %}
+  {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,10 @@
+django
+django-registration-redux
+django_cron
+django-redis
+hiredis
+psycopg2
+newrelic
+sendgrid-django
+gunicorn
+django-colorful

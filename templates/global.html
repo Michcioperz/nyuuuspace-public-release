@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block content %}
+<div class="halfbrick left">
+  <div class="card">
+    <p>At the very heart of the nyuuuspace is the stream of hugs. {% if user.is_authenticated %}Y{% else %}Once you've signed up, y{% endif %}ou can find the users you like, friends and cool people, follow them and see when they're being hugged and when they're hugging someone.</p>
+  </div>
+</div>
+<div class="halfbrick right">
+  {% for hug in stream %}
+    {% cache 300 hug hug.pk %}
+      {% include "hug_card.html" %}
+    {% endcache %}
+  {% endfor %}
+</div>
+  {% cache 300 socketio "global" %}
+  {% include "socketio.html" with pubsub_channel="global" %}
+  {% endcache %}
+{% endblock content %}

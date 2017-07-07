@@ -1,0 +1,12 @@
+{% load humanize %}
+Hello from the nyuuuspace!
+
+We've been following the hugs and pats and all the things alike, and we'd like to show you what you've missed in the meantime:
+
+{% for hug in hugs %}
+- {{ hug.timestamp|naturaltime }} {% if hug.source == user %}you{% else %}{{ hug.source.username }}{% endif %} {{ hug.kind.past }} {% if hug.target == user %}you{% else %}{{ hug.target.username }}{% endif %}
+{% endfor %}
+
+And as always, there's still much more to happen!
+
+Visit https://nyuuu.space soon and catch up to speed! <3

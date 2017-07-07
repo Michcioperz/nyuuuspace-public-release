@@ -1,0 +1,18 @@
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  $(document).ready(function() {
+    var awaiting = 0;
+    var original_title = document.title;
+    var deployment = $("<div></div>").hide().addClass("card").append($("<a></a>").text("Waiting for new hugs...").attr("href", "{{ request.path }}"));
+    deployment.prependTo($(".halfbrick.right"));
+    var socket = io();
+    socket.emit('join', "{{ pubsub_channel }}");
+    socket.on('hug', function (hug) {
+      awaiting += 1;
+      document.title = "("+awaiting+") "+original_title;
+      deployment.find($("a")).text(""+awaiting+" new hugs since last refresh");
+      if (deployment.is(":hidden")) deployment.slideDown();
+    });
+  });
+</script>

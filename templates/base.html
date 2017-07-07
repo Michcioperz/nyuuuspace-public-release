@@ -1,0 +1,56 @@
+{% load nyuuu %}
+{% load cache %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,400italic,700&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Atma:300">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Secular+One">
+    <link rel="stylesheet" href="{% static "style.css" %}">
+    <style>
+      nav {
+        background-color: {% if user.userware %}{{ user.userware.colour }}{% else %}{{ request.session.colour }}{% endif %};
+      }
+    </style>
+    <script src="https://use.fontawesome.com/27db0cf1bd.js"></script>
+    <title>{% block title %}nyuuuspace{% endblock title %}</title>
+    {% block head_insert %}{% endblock head_insert %}
+    <!-- Google Analytics is bad -->
+  </head>
+  <body>
+    <nav>
+      <ul class="menu">
+        {% if user.is_authenticated %}
+        <li><a href="{% url "auth_logout" %}">Logout</a></li>
+        <li><a href="{% url "settings_page" %}">Settings</a></li>
+        {% if user.is_staff %}<li><a href="{% url "admin:index" %}">Admin panel</a></li>{% endif %}
+        {% else %}
+        <li><a href="{% url "auth_login" %}">Log in</a></li>
+        <li><a href="{% url "registration_register" %}">Sign up</a></li>
+        {% endif %}
+        <li><a href="{% url "users_search_page" %}">Find people</a></li>
+      </ul>
+      <a class="brand{% if user.userware and user.userware.colour|bright_detector %} overbright{% endif %}" href="/">nyuuu<sup>space</sup></a>
+    </nav>
+    <div class="container">
+      <aside>
+          {% for message in messages %}
+            <div class="card alert {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+      </aside>
+      <main>
+        {% block content %}
+        {% endblock content %}
+      </main>
+      <footer>
+        This site is run by <a href="https://michcioperz.space">Michcioperz</a>, a high schooler with limited reserves of time and money. Feel free to support him on <a href="https://patreon.com/Michcioperz">his Patreon</a>.
+      </footer>
+{% cache 300 adbar %}
+{% include "adbar.html" %}
+{% endcache %}
+    </div>
+  </body>
+</html>

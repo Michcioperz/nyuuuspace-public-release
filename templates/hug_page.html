@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block title %}#{{ hug.pk }} | nyuuuspace{% endblock title %}
+{% block content %}
+{% cache 300 hug hug.pk %}
+  {% include "hug_card.html" %}
+{% endcache %}
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <input id="user-search-box" type="text" name="username" title="Username" placeholder="Username" autofocus
+           autocomplete="off" pattern="[\w@\+\-]+">
+    <ul id="results"></ul>
+  </div>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var box = $("#user-search-box");
+      var results_target = $("#results");
+      box.on('input', function () {
+        if (box.val().length > 0)
+          $.getJSON("/u/search." + $("#user-search-box").val() + ".json", function (data) {
+            results_target.empty();
+            $.each(data.users, function (key, value) {
+              results_target.append($("<li></li>").append($("<a></a>").addClass(value.overbright ? "overbright" : "justbrightenough").attr("href", "/u/" + value.username + "/").css("color", value.colour).text(value.username)));
+            });
+          });
+        else
+          results_target.empty();
+      });
+    });
+  </script>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block content %}
+<h3>Do you wish to {{ behavior }}?</h3>
+  {% cache 300 hug hug.pk %}
+  {% include "hug_card.html" %}
+  {% endcache %}
+  <form method="post" action="{{ action }}">
+  {% csrf_token %}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <input type="submit" value="Yes">
+  <a href="{% firstof next "/" %}">No</a>
+  </form>
+{% endblock content %}

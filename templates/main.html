@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load nyuuu %}
+{% load cache %}
+{% block content %}
+  <div class="halfbrick left">
+    <div class="card">
+      {% if followables|length > 0 %}
+      <h5>Random people to follow</h5>
+        {% for followable in followables %}
+        <p><a itemprop="username"{% if followable.userware.colour|bright_detector %} class="overbright"{% endif %} href="{{ followable.userware.get_absolute_url }}" style="color: {{ followable.userware.colour|colour_optimizer }}">{{ followable.username }}</a></p>
+        {% endfor %}
+      {% else %}
+      <p>You're already following everyone on the site! &lt;3</p>
+      {% endif %}
+    </div>
+    <div class="card">
+      {% with following=user.following.all %}
+      <h5>Following ({{ following|length }})</h5>
+        {% for follow in following %}
+        <p><a itemprop="username"{% if follow.target.userware.colour|bright_detector %} class="overbright"{% endif %} href="{{ follow.target.userware.get_absolute_url }}" style="color: {{ follow.target.userware.colour|colour_optimizer }}">{{ follow.target.username }}</a></p>
+        {% endfor %}
+      {% endwith %}
+    </div>
+    {% comment %}<div class="card">
+      {% with followers=user.followers.all %}
+      <h5>Followers ({{ followers|length }})</h5>
+        {% for follow in followers %}
+        <p><a itemprop="username"{% if follow.source.userware.colour|bright_detector %} class="overbright"{% endif %} href="{{ follow.source.userware.get_absolute_url }}" style="color: {{ follow.source.userware.colour }}">{{ follow.source.username }}</a></p>
+        {% endfor %}
+      {% endwith %}
+    </div>{% endcomment %}
+  </div>
+  <div class="halfbrick right">
+  {% if stream|length > 0 %}
+  {% for hug in stream %}
+    {% cache 300 hug hug.pk %}
+      {% include "hug_card.html" %}
+    {% endcache %}
+  {% endfor %}
+  {% else %}
+  <div class="card">
+    <p>You're not following anyone just yet &lt;/3</p>
+  </div>
+  {% endif %}
+  </div>
+  {% cache 300 socketio user.username %}
+  {% include "socketio.html" with pubsub_channel=user.username %}
+  {% endcache %}
+{% endblock content %}

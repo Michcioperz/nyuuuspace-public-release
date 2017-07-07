@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Settings | nyuuuspace{% endblock title %}
+{% block content %}
+  <a href="{% url "auth_password_change" %}">Change your password here</a>
+<form method="post" action="">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save!">
+</form>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% load nyuuu %}
+{% load humanize %}
+<div class="hug card">
+  <a itemprop="username"{% if hug.source_colour|bright_detector %} class="overbright"{% endif %} href="{{ hug.source.userware.get_absolute_url }}" style="color: {{ hug.source_colour|colour_optimizer }}">{{ hug.source.username }}</a> {% if hug.inspiration and hug.inspiration.target == hug.target %}re{% endif %}{{ hug.kind.past }} {% if hug.target == hug.source %}{{ hug.source.userware.pronoun.reflexive }}{% else %}<a itemprop="username"{% if hug.target_colour|bright_detector %} class="overbright"{% endif %} href="{{ hug.target.userware.get_absolute_url }}" style="color: {{ hug.target_colour|colour_optimizer }}">{{ hug.target.username }}</a>{% endif %}{% if hug.inspiration and hug.inspiration.source == hug.target %} back{% endif %}
+  <time datetime="{{ hug.timestamp|date:"c" }}">{{ hug.timestamp|naturaltime }}</time>
+  <hr>
+  <a href="{% url "hug_rehug_question" hug.pk %}"><i class="fa fa-reply" aria-hidden="true"></i>Re{{ hug.kind.verb }}</a>
+  <a href="{% url "hug_hugback_question" hug.pk %}"><i class="fa fa-repeat" aria-hidden="true"></i>{{ hug.kind.verb|capfirst }} back</a>
+</div>

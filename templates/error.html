@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Error-chan occured! | nyuuuspace {% endblock title %}
+{% block content %}
+  <h1>We couldn't bring you the hugs!</h1>
+    <h3>{% if error_content %}{{ error_content | safe }}{% else %}We weren't prepared for this, so if you think
+        something's missing, please tell us about this mistake through email or twitter.{% endif %}</h3>
+{% endblock content %}

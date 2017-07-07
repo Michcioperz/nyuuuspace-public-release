@@ -1,0 +1,207 @@
+$much-background: #85c8d1;
+$less-background: floralwhite;
+$much-shadow: darkslategray;
+
+$logo-outline-color: darkslategray;
+$logo-outline-delta: 1px;
+$logo-outline-blur: 0px;
+
+@mixin padding-vertical($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
+
+@mixin padding-sides($value) {
+  padding-left: $value;
+  padding-bottom: $value;
+}
+
+@mixin margin-sides($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin margin-center() {
+  @include margin-sides(auto);
+}
+
+@mixin box-shadow($params) {
+  -webkit-box-shadow: $params;
+  -moz-box-shadow: $params;
+  box-shadow: $params;
+}
+
+@mixin box-sizing($params) {
+  -webkit-box-sizing: $params;
+  -moz-box-sizing: $params;
+  box-sizing: $params;
+}
+
+@mixin transition($params) {
+  -webkit-transition: $params;
+  -moz-transition: $params;
+  -ms-transition: $params;
+  -o-transition: $params;
+  transition: $params;
+}
+
+@mixin transform($params) {
+  -webkit-transform: $params;
+  -moz-transform: $params;
+  -ms-transform: $params;
+  -o-transform: $params;
+  transform: $params;
+}
+
+body {
+  font-family: 'Helvetica Neue', 'Lato', 'Roboto', sans-serif;
+  background-color: $much-background;
+  color: $much-shadow;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0;
+}
+
+.container {
+  width: 1000px;
+  width: 90vw;
+  max-width: 1000px;
+  @include margin-center;
+}
+
+nav {
+  width: 100%;
+  min-height: 10rem;
+  //border-bottom: 1px double $much-shadow;
+  @include padding-vertical(1rem);
+  margin-bottom: 3rem;
+  .brand {
+    text-decoration: none;
+    color: floralwhite;
+    //text-shadow: $logo-outline-delta $logo-outline-delta $logo-outline-blur $logo-outline-color,
+    //-1*$logo-outline-delta $logo-outline-delta $logo-outline-blur $logo-outline-color,
+    //-1*$logo-outline-delta -1*$logo-outline-delta $logo-outline-blur $logo-outline-color,
+    //$logo-outline-delta -1*$logo-outline-delta $logo-outline-blur $logo-outline-color;
+    font-family: "Atma", fantasy, cursive;
+    font-weight: 300;
+    font-size: 5rem;
+    sup {
+      font-family: "Secular One", "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+      font-size: 3rem;
+    }
+  }
+  ul.menu {
+    padding: 0;
+    list-style-type: none;
+    @media (min-width: 600px) {
+      li {
+        display: inline;
+        @include margin-sides(4rem);
+      }
+    }
+    li {
+      a:link, a:visited {
+        text-decoration: none;
+        color: floralwhite;
+      }
+    }
+  }
+}
+
+.card {
+  a:link, a:visited {
+    color: darkslategray;
+  }
+}
+
+aside {
+  padding-bottom: 1rem;
+}
+
+.alert.success {
+  background-color: limegreen;
+}
+
+.alert.warning {
+  background-color: darkorange;
+}
+
+.alert.error {
+  background-color: firebrick;
+  color: floralwhite;
+}
+
+form {
+  padding-bottom: 1rem;
+  p {
+    display: block;
+    padding-bottom: 1rem;
+    label {
+      font-weight: 700;
+    }
+    .helptext {
+      padding-top: 0.5rem;
+      display: block;
+      font-style: italic;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.halfbrick {
+  width: 100%;
+  @media (min-width: 1081px) {
+    width:  50%;
+  }
+}
+
+//$user-outline-set: 1px;
+//$user-outline-blur: 0;
+//$user-outline-colour: darkslategray;
+
+.overbright {
+  text-shadow: 0 0 1px darkslategray;
+  //text-shadow:
+    //$user-outline-set $user-outline-set $user-outline-blur $user-outline-colour,
+    //-1*$user-outline-set $user-outline-set $user-outline-blur $user-outline-colour,
+    //-1*$user-outline-set -1*$user-outline-set $user-outline-blur $user-outline-colour,
+    //$user-outline-set -1*$user-outline-set $user-outline-blur $user-outline-colour;
+}
+
+$card-shadow-set: 8px;
+$card-shadow-blur: 10px;
+$card-shadow-colour: $much-shadow;
+
+.card {
+  @include box-sizing(border-box);
+  width: 90%;
+  @include margin-center;
+  background-color: $less-background;
+  @include box-shadow($card-shadow-set $card-shadow-set $card-shadow-blur $card-shadow-colour);
+  margin-bottom: 2rem;
+  padding: 1rem;
+  @include transition(all 500ms);
+}
+
+.card:hover {
+  @include box-shadow(2*$card-shadow-set 2*$card-shadow-set 2*$card-shadow-blur $card-shadow-colour);
+  @include transform(translateY(-0.5rem))
+}
+
+//@media (min-width: 1081px) {
+//  .halfbrick.left {
+//    .card {
+//      @include box-shadow(-1*$card-shadow-set $card-shadow-set $card-shadow-blur $card-shadow-colour);
+//    }
+//    .card:hover {
+//      @include box-shadow(-2*$card-shadow-set 2*$card-shadow-set 2*$card-shadow-blur $card-shadow-colour);
+//    }
+//  }
+//}
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
